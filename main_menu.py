@@ -12,9 +12,7 @@ class Background(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("images\\bg.png")
         self.image = pygame.transform.scale(self.image, (width, height))
-
         self.rect = self.image.get_rect()
-        self.rect.left, self.rect.top = (0, 0)
 
 
 class GUI:
