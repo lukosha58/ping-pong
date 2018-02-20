@@ -9,7 +9,7 @@ def add(u, v):
 class Ball(pygame.sprite.Sprite):
     def __init__(self, start_pos, width, group):
         self.width = width
-        self.speed_x, self.speed_y = choice([-7, 7]), 1
+        self.speed_x, self.speed_y = choice([-11, 11]), 1
         self.start_pos = start_pos
         self.x = start_pos[0]
         super().__init__(group)
@@ -26,17 +26,18 @@ class Ball(pygame.sprite.Sprite):
         if pygame.sprite.spritecollideany(self, group1) or pygame.sprite.spritecollideany(self, group2):
             self.move_v = [-self.move_v[0], choice([-self.move_v[1], self.move_v[1]])]
             pygame.mixer.music.play()
+            self.move_v[0] *= 1.02
         if int(self.pos[0].real) < 0:
             pad2.score += 1
             pad2.v += 3
             pad1.v += 1
-            self.move_v[0] *= 1.03
+            self.move_v[0] = choice([-11, 11])
             self.rect = self.image.get_rect(center=self.start_pos)
         elif int(self.pos[0].real) >= self.width:
             pad1.score += 1
             pad1.v += 3
             pad2.v += 1
-            self.move_v[0] *= 1.03
+            self.move_v[0] = choice([-7, 7])
             self.rect = self.image.get_rect(center=self.start_pos)
 
         display = pygame.display.get_surface().get_rect()
