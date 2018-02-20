@@ -98,7 +98,9 @@ while running:
         gui.add_element(back)
         introText = ["W и S - чтобы управлять левой ракеткой",
                      "↑ и ↓ - чтобы управлять правой ракеткой",
-                     "space - приостановить игру"]
+                     "space - приостановить игру",
+                     'необходимо набрать 10 очков одному из игроков',
+                     'чтобы победить']
 
         window.fill(pygame.Color('blue'))
         font = pygame.font.Font('font\pixel.ttf', 14)
