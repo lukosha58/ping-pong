@@ -8,7 +8,7 @@ class Player(pygame.sprite.Sprite):
         self.y = h // 2 - 50
         super().__init__(group)
         self.image = pygame.Surface([15, 150])
-        self.image.fill(pygame.Color('blue'))
+        self.image.fill(pygame.Color('black'))
         self.rect = pygame.Rect(self.x, self.y, 15, 150)
         self.v = 5
         self.score = 0
@@ -29,7 +29,7 @@ class Enemy(pygame.sprite.Sprite):
         self.y = h // 2 - 50
         super().__init__(group)
         self.image = pygame.Surface([15, 150])
-        self.image.fill(pygame.Color('red'))
+        self.image.fill(pygame.Color('black'))
         self.rect = pygame.Rect(self.x, self.y, 15, 150)
         self.score = 0
         self.v = 5
