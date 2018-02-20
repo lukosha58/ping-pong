@@ -27,13 +27,13 @@ class Ball(pygame.sprite.Sprite):
             self.move_v = [-self.move_v[0], choice([-self.move_v[1], self.move_v[1]])]
             pygame.mixer.music.play()
         if int(self.pos[0].real) < 0:
-            pad1.score += 1
+            pad2.score += 1
             pad2.v += 3
             pad1.v += 1
             self.move_v[0] *= 1.03
             self.rect = self.image.get_rect(center=self.start_pos)
         elif int(self.pos[0].real) >= self.width:
-            pad2.score += 1
+            pad1.score += 1
             pad1.v += 3
             pad2.v += 1
             self.move_v[0] *= 1.03
