@@ -7,7 +7,7 @@ running = True
 pygame.init()
 pygame.display.set_caption('ping-pong')
 clock = pygame.time.Clock()
-size = width, height = 800, 600
+size = width, height = 1280, 720
 screen = pygame.display.set_mode(size)
 screen.fill(pygame.color.Color('darkgreen'))
 horizontal_borders = pygame.sprite.Group()
@@ -24,6 +24,37 @@ class Borders(pygame.sprite.Sprite):
         self.image.fill(pygame.Color('white'))
 
 
+def terminate():
+    pygame.quit()
+    sys.exit();
+
+
+def end_screen(pad):
+    introText = [pad + ' игрок победил!',
+                 'Нажмите любую кнопку, чтобы выйти']
+
+    screen.fill(pygame.Color('darkgreen'))
+    font = pygame.font.Font('font\pixel.ttf', 15)
+    textCoord = 250
+    for line in introText:
+        stringRendered = font.render(line, 1, pygame.Color('white'))
+        introRect = stringRendered.get_rect()
+        textCoord += 20
+        introRect.top = textCoord
+        introRect.x = width // 2 - 200
+        textCoord += introRect.height
+        screen.blit(stringRendered, introRect)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            elif event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+                terminate()
+        pygame.display.flip()
+        clock.tick(60)
+
+
 def draw_text(surf, text, size, x, y):
     font = pygame.font.Font('font\pixel.ttf', size)
     text_surface = font.render(text, True, (255, 255, 255))
@@ -38,6 +69,8 @@ ball = Ball(screen.get_rect().center, width, sprite_ball)
 Borders(0, 0, width, 0)
 Borders(0, height - 10, width, height)
 pause = False
+music = pygame.mixer.Sound('music\gameplay.ogg')
+music.play(420)
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -58,10 +91,13 @@ while running:
         right_pad_sprite.draw(screen)
         if left_pad.score == 10:
             ball.move_v = (0, 0)
+            end_screen('Левый')
         elif right_pad.score == 10:
+            end_screen('Правый')
             ball.move_v = (0, 0)
-        draw_text(screen, str(left_pad.score), 80, width // 4, 20)
-        draw_text(screen, str(right_pad.score), 80, width - 200, 20)
+        else:
+            draw_text(screen, str(left_pad.score), 80, width // 4, 20)
+            draw_text(screen, str(right_pad.score), 80, width - 200, 20)
         pygame.display.flip()
         clock.tick(60)
 pygame.quit()
