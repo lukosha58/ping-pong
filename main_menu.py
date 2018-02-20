@@ -2,8 +2,9 @@ import pygame, sys
 
 pygame.init()
 running = True
-size = width, height = 800, 600
-screen = pygame.display.set_mode(size)
+size = width, height = 1280, 720
+window = pygame.display.set_mode(size)
+pygame.display.set_caption('menu')
 
 
 class Background(pygame.sprite.Sprite):
@@ -42,14 +43,14 @@ class GUI:
                 element.get_event(event)
 
 
-class ButtonMenu:
+class Button:
     def __init__(self, rect, text):
         self.Rect = pygame.Rect(rect)
         self.text = text
         self.font = pygame.font.Font('font\pixel.ttf', 30)
+        self.font_color = [pygame.Color("black"), pygame.Color("white")]
         self.pressed = False
         self.collided = False
-        self.font_color = [pygame.Color("black"), pygame.Color("white")]
 
     def render(self, surface):
         if self.collided:
@@ -58,7 +59,7 @@ class ButtonMenu:
             surface.blit(self.rendered_text, self.rendered_rect)
         else:
             self.rendered_text = self.font.render(self.text, 1, self.font_color[0])
-            self.rendered_rect = self.rendered_text.get_rect(x=self.Rect.x + 2, y=self.Rect.y + 2)
+            self.rendered_rect = self.rendered_text.get_rect(x=self.Rect.x, y=self.Rect.y)
             surface.blit(self.rendered_text, self.rendered_rect)
 
     def get_event(self, event):
@@ -74,10 +75,10 @@ class ButtonMenu:
 bg = Background()
 bg_help = Background()
 gui = GUI()
-play = ButtonMenu((width - 300, 250, 100, 50), "Играть")
-help = ButtonMenu((width - 300, 380, 100, 50), "Помощь")
-exit = ButtonMenu((width - 300, 510, 100, 50), "Выход")
-back = ButtonMenu((width - 300, 510, 100, 50), "Назад")
+play = Button((width - 300, 250, 175, 50), "Играть")
+help = Button((width - 300, 380, 175, 50), "Помощь")
+exit = Button((width - 300, 510, 175, 50), "Выход")
+back = Button((width - 300, 510, 175, 50), "Назад")
 gui.add_element(play)
 gui.add_element(help)
 gui.add_element(exit)
@@ -101,9 +102,9 @@ while running:
                      "↑ и ↓ - чтобы управлять правой ракеткой",
                      "space - приостановить игру"]
 
-        screen.fill(pygame.Color('blue'))
+        window.fill(pygame.Color('blue'))
         font = pygame.font.Font('font\pixel.ttf', 14)
-        screen.blit(bg_help.image, (0, 0))
+        window.blit(bg_help.image, (0, 0))
         textCoord = 250
         for line in introText:
             stringRendered = font.render(line, 1, pygame.Color('black'))
@@ -112,17 +113,16 @@ while running:
             introRect.top = textCoord
             introRect.x = width // 2 - 200
             textCoord += introRect.height
-            screen.blit(stringRendered, introRect)
+            window.blit(stringRendered, introRect)
         gui.elements = [back]
-        gui.render(screen)
+        gui.render(window)
         if back.pressed:
-
             gui.elements = [play, help, exit]
             help.pressed = False
             back.pressed = False
     else:
-        screen.blit(bg.image, (0, 0))
-        gui.render(screen)
+        window.blit(bg.image, (0, 0))
+        gui.render(window)
         gui.update()
     pygame.display.flip()
 
